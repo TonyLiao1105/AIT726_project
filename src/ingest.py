@@ -24,7 +24,7 @@ def save_to_csv(df, output_path):
         df (pd.DataFrame): The DataFrame to save.
         output_path (str or Path): The path where the CSV file will be saved.
     """
-    df.to_csv(output_path, index=False)
+    df.to_csv(output_path, index=False, encoding = "utf-8-sig")
     print(f"Data saved to {output_path}")
 
 if __name__ == "__main__":
