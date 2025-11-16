@@ -1,0 +1,27 @@
+model:
+  name: "ner_model"
+  type: "transformer"
+  pretrained_model: "bert-base-uncased"
+  num_labels: 5
+  max_seq_length: 128
+  dropout_rate: 0.1
+
+training:
+  batch_size: 32
+  learning_rate: 5e-5
+  num_epochs: 3
+  warmup_steps: 500
+  weight_decay: 0.01
+
+data:
+  raw_data_path: "data/raw/doj_press_releases.jsonl"
+  interim_data_path: "data/interim"
+  processed_data_path: "data/processed"
+
+evaluation:
+  metrics: ["precision", "recall", "f1"]
+  validation_split: 0.2
+
+logging:
+  log_level: "INFO"
+  log_file: "logs/training.log"
