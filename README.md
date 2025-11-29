@@ -25,6 +25,17 @@ Run the notebooks:
 - Validation samples: 35
 - F1 Score: 0.231 (baseline)
 
+## Evaluation Outputs
+
+- Evaluation results (JSON + CSV summary) are written to the `outputs/` directory by the `save_evaluation_results` helper in `src/evaluation.py`.
+- Example usage in Python:
+
+```python
+from src.evaluation import save_evaluation_results
+results = {'precision': 0.9, 'recall': 0.8, 'f1': 0.85, 'per_label': {}}
+save_evaluation_results(results, 'outputs/eval_results.json')
+```
+
 ## Project Structure
 
 ```
@@ -45,3 +56,39 @@ doj-press-release-nlp/
 ├── README.md
 └── .gitignore
 ```
+## Training
+
+Train a real spaCy NER model using the provided script `scripts/train_spacy.py`.
+
+Requirements & recommendations:
+- Use Python 3.10 or 3.11 (spaCy and pydantic v1 are not fully compatible with Python 3.14).
+- Install dependencies (example):
+
+```powershell
+pip install -r requirements-tests.txt
+pip install spacy
+python -m spacy download en_core_web_sm
+```
+
+Run training (outside of pytest) like this:
+
+```powershell
+python .\scripts\train_spacy.py --train data/processed/train_data.jsonl --dev data/processed/test_data.jsonl --output models/ner_model --epochs 20
+```
+
+The script will save the trained model to the directory given by `--output` (e.g. `models/ner_model`). If spaCy save fails for any reason the script will write a simple marker file `models/ner_model/MODEL_SAVED.txt`.
+
+After training you can evaluate and save results:
+
+```python
+from src.ner.model import NERModel
+from src.ner.dataset import NERDataset
+from src.evaluation import save_evaluation_results
+
+model = NERModel.load('models/ner_model')  # or NERModel() then load
+ds = NERDataset('data/processed/test_data.jsonl')
+metrics = model.evaluate(ds)
+save_evaluation_results(metrics, 'outputs/eval_results.json')
+```
+
+Once you have a trained model and are satisfied with evaluation metrics, consider removing the temporary test-only deterministic evaluate behavior in `src/ner/model.py` to reflect real model performance.
