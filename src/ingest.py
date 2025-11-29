@@ -16,6 +16,18 @@ def load_press_releases(file_path):
         rows = [json.loads(line) for line in f if line.strip()]
     return pd.json_normalize(rows)
 
+def load_data(file_path):
+    """
+    Backwards-compatible loader used by tests: returns a list of dicts
+
+    Raises FileNotFoundError if the path does not exist.
+    """
+    p = Path(file_path)
+    if not p.exists():
+        raise FileNotFoundError(f"File not found: {file_path}")
+    with p.open(encoding="utf-8") as f:
+        return [json.loads(line) for line in f if line.strip()]
+
 def save_to_csv(df, output_path):
     """
     Save the DataFrame to a CSV file.

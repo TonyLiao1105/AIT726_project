@@ -25,6 +25,17 @@ Run the notebooks:
 - Validation samples: 35
 - F1 Score: 0.231 (baseline)
 
+## Evaluation Outputs
+
+- Evaluation results (JSON + CSV summary) are written to the `outputs/` directory by the `save_evaluation_results` helper in `src/evaluation.py`.
+- Example usage in Python:
+
+```python
+from src.evaluation import save_evaluation_results
+results = {'precision': 0.9, 'recall': 0.8, 'f1': 0.85, 'per_label': {}}
+save_evaluation_results(results, 'outputs/eval_results.json')
+```
+
 ## Project Structure
 
 ```

@@ -1,5 +1,7 @@
 from collections import defaultdict
 from math import isclose
+import json
+from pathlib import Path
 
 def evaluate_model(model, dataset):
     """
@@ -49,3 +51,23 @@ def evaluate_model(model, dataset):
         per_label[lab] = {"precision": prec, "recall": rec, "f1": f, "tp": t, "fp": p, "fn": n}
 
     return {"precision": precision, "recall": recall, "f1": f1, "per_label": per_label}
+
+
+def save_evaluation_results(results: dict, output_path: str):
+    """
+    Save evaluation results to the given output path in JSON format and a simple CSV summary.
+    Creates parent directories if needed.
+    """
+    p = Path(output_path)
+    p.parent.mkdir(parents=True, exist_ok=True)
+    # save JSON
+    with p.open('w', encoding='utf-8') as f:
+        json.dump(results, f, indent=2)
+
+    # also write a compact CSV summary next to the JSON
+    csv_path = p.with_suffix('.csv')
+    lines = ["label,precision,recall,f1,tp,fp,fn"]
+    for lab, stats in results.get('per_label', {}).items():
+        lines.append(f"{lab},{stats.get('precision',0):.4f},{stats.get('recall',0):.4f},{stats.get('f1',0):.4f},{stats.get('tp',0)},{stats.get('fp',0)},{stats.get('fn',0)}")
+    csv_path.write_text('\n'.join(lines), encoding='utf-8')
+    return p, csv_path
