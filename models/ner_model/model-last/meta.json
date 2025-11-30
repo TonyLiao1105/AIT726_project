@@ -1,0 +1,90 @@
+{
+  "lang": "en",
+  "name": "pipeline",
+  "version": "0.0.0",
+  "spacy_version": ">=3.8.11,<3.9.0",
+  "description": "",
+  "author": "",
+  "email": "",
+  "url": "",
+  "license": "",
+  "spacy_git_version": "e7a662a",
+  "vectors": {
+    "width": 0,
+    "vectors": 0,
+    "keys": 0,
+    "name": null,
+    "mode": "default"
+  },
+  "labels": {
+    "tok2vec": [],
+    "ner": [
+      "BUSINESS",
+      "DEFENDANT",
+      "FRAUD AMOUNT",
+      "FRAUD MECHANISM",
+      "GOV PROGRAM",
+      "JUDGE",
+      "PROSECUTOR",
+      "SENTENCE"
+    ]
+  },
+  "pipeline": [
+    "tok2vec",
+    "ner"
+  ],
+  "components": [
+    "tok2vec",
+    "ner"
+  ],
+  "disabled": [],
+  "performance": {
+    "ents_f": 0.6258064516129033,
+    "ents_p": 0.782258064516129,
+    "ents_r": 0.521505376344086,
+    "ents_per_type": {
+      "FRAUD AMOUNT": {
+        "p": 0.0,
+        "r": 0.0,
+        "f": 0.0
+      },
+      "DEFENDANT": {
+        "p": 0.9076923076923077,
+        "r": 0.6483516483516484,
+        "f": 0.7564102564102564
+      },
+      "JUDGE": {
+        "p": 0.875,
+        "r": 0.7,
+        "f": 0.7777777777777777
+      },
+      "BUSINESS": {
+        "p": 0.25,
+        "r": 0.05555555555555555,
+        "f": 0.0909090909090909
+      },
+      "SENTENCE": {
+        "p": 0.5,
+        "r": 0.6,
+        "f": 0.5454545454545454
+      },
+      "FRAUD MECHANISM": {
+        "p": 0.2222222222222222,
+        "r": 0.16666666666666666,
+        "f": 0.1904761904761905
+      },
+      "PROSECUTOR": {
+        "p": 0.8333333333333334,
+        "r": 0.5952380952380952,
+        "f": 0.6944444444444444
+      },
+      "GOV PROGRAM": {
+        "p": 0.0,
+        "r": 0.0,
+        "f": 0.0
+      }
+    },
+    "tok2vec_loss": 1280.5627057761644,
+    "ner_loss": 99.80774688720703
+  }
+}
